@@ -1,0 +1,21 @@
+{
+  "name": "okay-but-question",
+  "version": "1.0.0",
+  "description": "A local app for The Plenary, Co.'s Illuminations exhibit \"OK, But Why?\".",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Samuel Knox",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "google-auth-library": "^8.9.0",
+    "google-spreadsheet": "^4.1.0",
+    "nodemon": "^3.0.1"
+  }
+}

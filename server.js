@@ -4,7 +4,8 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
 
 /*
- * File: server.js
+ * Project: Okay-But-Question
+ * Repository: https://github.com/KnoxSamuel/okay-but-question.git
  * Author: Samuel Knox
  * Email: knoxsa@oregonstate.edu
  */
@@ -39,6 +40,24 @@ async function appendQuestionToSheet(question) {
 
 
 
+/*************************************************************
+ * Returns <Record> objects that are approved
+ *
+ * https://theoephraim.github.io/node-google-spreadsheet/
+ *************************************************************/
+async function fetchApprovedQuestionsFromSheet() {
+  await doc.loadInfo();
+  const sheet = doc.sheetsByIndex[0];
+  rows = await sheet.getRows();
+  rows = rows.filter(row =>
+    ["Yes", "Y", "yes", "y", "X", "x"].includes(row.Approved)
+  ).map(row => row.Question);
+  console.log(rows);
+  return rows;
+}
+
+
+
 // Serve static files
 app.use('/input', express.static('public/input'));
 app.use('/projection', express.static('public/projection'));
@@ -53,6 +72,17 @@ app.use(express.json());
  ******************************/
 app.get('/', (req, res) => {
   res.send('Hello, OK But Why Exhibit!');
+});
+
+
+
+/******************************
+ * Route: Pull approved questions ('Y' or 'y') from worksheet
+ *
+ ******************************/
+app.get('/fetch-approved-questions', async (req, res) => {
+  const approvedQuestions = await fetchApprovedQuestionsFromSheet(); // Function not implemented yet
+  res.json(approvedQuestions);
 });
 
 

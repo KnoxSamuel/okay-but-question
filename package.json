@@ -9,7 +9,7 @@
     "dev": "nodemon server.js"
   },
   "author": "Samuel Knox",
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [],
   "dependencies": {
     "dotenv": "^16.3.1",

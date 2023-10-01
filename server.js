@@ -3,6 +3,7 @@ const express = require('express');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
 
+
 /*
  * Project: Okay-But-Question
  * Repository: https://github.com/KnoxSamuel/okay-but-question.git
@@ -11,7 +12,7 @@ const { JWT } = require('google-auth-library');
  */
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const SHEET_ID = '1Vd1XLQCE6SiJvGlPAf2iIFRT-iRIvBiPPoZVBxkzNlQ';
 
 const serviceAccountAuth = new JWT({
@@ -48,11 +49,16 @@ async function appendQuestionToSheet(question) {
 async function fetchApprovedQuestionsFromSheet() {
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
-  rows = await sheet.getRows();
+  let rows = await sheet.getRows();
+
+  // Filter out rows that are not approved
   rows = rows.filter(row =>
-    ["Yes", "Y", "yes", "y", "X", "x"].includes(row.Approved)
-  ).map(row => row.Question);
-  console.log(rows);
+    ["Yes", "Y", "yes", "y", "X", "x"].includes(row._rawData[0]) // 'Approved' is the first column
+  ).map(row => row._rawData); // 'Question' is the second column, followed by 'Timestamp'
+  
+  // Debugging
+  console.log('Filtered Rows:', rows);
+
   return rows;
 }
 
@@ -81,7 +87,7 @@ app.get('/', (req, res) => {
  *
  ******************************/
 app.get('/fetch-approved-questions', async (req, res) => {
-  const approvedQuestions = await fetchApprovedQuestionsFromSheet(); // Function not implemented yet
+  const approvedQuestions = await fetchApprovedQuestionsFromSheet();
   res.json(approvedQuestions);
 });
 

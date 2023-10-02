@@ -1,23 +1,37 @@
-body {
-  background-color: black;
+@font-face {
+  /* drop custom fonts in `./public/fonts/` */
+  font-family: 'PixelifySans';
+  src: url('../fonts/PixelifySans-SemiBold.ttf') format('truetype');
 }
 
+
+body {
+  background-color: black;
+  font-family: 'PixelifySans', sans-serif;
+}
+
+
+/* Semi-transparent white */
 .question {
-  /* Semi-transparent white */
+  font-size: 35px;
   color: rgba(255, 255, 255, 0.5);
 }
 
+
+/* Fixed & fully opaque */
 .active-question {
-  /* Fully opaque white */
+  font-size: 50px;
   color: rgba(255, 255, 255, 1);
+  
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+
 /* TODO: Refine this drifting animation to bounce over entire screen */
-@keyframes drift {
+/* @keyframes drift {
   0% {
     transform: translate(0, 0);
   }
@@ -30,5 +44,5 @@ body {
 }
 
 .question.drift {
-  animation: drift 10s infinite linear;
-}
+  animation: drift 4s infinite linear;
+} */

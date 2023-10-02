@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'Placeholder';
-  src: url('./public/fonts/Placeholder.otf');
-  /* drop custom fonts in './public/fonts/' */
+  /* drop custom fonts in `./public/fonts/` */
+  font-family: 'PixelifySans';
+  src: url('../fonts/PixelifySans-SemiBold.ttf') format('truetype');
 }
 
 body {
   background-color: black;
   color: white;
-  font-family: 'Placeholder', sans-serif;
+  font-family: 'PixelifySans', sans-serif;
 }
 
 #container {
@@ -30,19 +30,21 @@ body {
 }
 
 input[type="text"] {
+  font-family: 'PixelifySans', sans-serif;
   text-align: center;
   font-size: 32px;
-  width: 100%;
-  max-width: 800px;
   margin: 0 auto;
   padding: 18px 30px;
   border: 3px solid #ccc;
+  width: 100%;
+  max-width: 800px;
 }
 
 button {
+  font-family: 'PixelifySans', sans-serif;
   display: block;
-  margin: 20px auto;
   cursor: pointer;
   font-size: 30px;
+  margin: 20px auto;
   padding: 16px 36px;
 }

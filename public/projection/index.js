@@ -30,5 +30,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   fetchQuestions();
-  setInterval(fetchQuestions, 30000); // Fetch every 30 seconds
+  setInterval(fetchQuestions, 120000); // Fetch every 30 seconds
 });

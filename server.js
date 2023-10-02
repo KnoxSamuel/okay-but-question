@@ -67,6 +67,7 @@ async function fetchApprovedQuestionsFromSheet() {
 // Serve static files
 app.use('/input', express.static('public/input'));
 app.use('/projection', express.static('public/projection'));
+app.use('/fonts', express.static('public/fonts'));
 
 // Parse JSON bodies
 app.use(express.json());

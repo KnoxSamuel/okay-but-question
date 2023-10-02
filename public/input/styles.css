@@ -1,13 +1,13 @@
 @font-face {
   /* drop custom fonts in `./public/fonts/` */
-  font-family: 'PixelifySans';
-  src: url('../fonts/PixelifySans-SemiBold.ttf') format('truetype');
+  font-family: 'Wellfleet';
+  src: url('../fonts/Wellfleet-Regular.ttf') format('truetype');
 }
 
 body {
   background-color: black;
   color: white;
-  font-family: 'PixelifySans', sans-serif;
+  font-family: 'Wellfleet', sans-serif;
 }
 
 #container {
@@ -30,7 +30,7 @@ body {
 }
 
 input[type="text"] {
-  font-family: 'PixelifySans', sans-serif;
+  font-family: 'Wellfleet', sans-serif;
   text-align: center;
   font-size: 32px;
   margin: 0 auto;
@@ -41,7 +41,7 @@ input[type="text"] {
 }
 
 button {
-  font-family: 'PixelifySans', sans-serif;
+  font-family: 'Wellfleet', sans-serif;
   display: block;
   cursor: pointer;
   font-size: 30px;

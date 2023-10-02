@@ -56,8 +56,7 @@ async function fetchApprovedQuestionsFromSheet() {
     ["Yes", "Y", "yes", "y", "X", "x"].includes(row._rawData[0]) // 'Approved' is the first column
   ).map(row => row._rawData); // 'Question' is the second column, followed by 'Timestamp'
   
-  // Debugging
-  console.log('Filtered Rows:', rows);
+  console.log('Filtered Rows:', rows); // Debugging
 
   return rows;
 }

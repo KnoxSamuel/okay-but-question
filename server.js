@@ -57,8 +57,12 @@ async function fetchApprovedQuestionsFromSheet() {
   ).map(row => row._rawData); // 'Question' is the second column, followed by 'Timestamp'
   
   console.log('Filtered Rows:', rows); // Debugging
+  
+  questionColumn = rows.map(row => row[1]);
+  console.log('Approved Questions:', questionColumn); // Debugging
+  console.log('Length questionColumn: ', questionColumn.length); // Debugging
 
-  return rows;
+  return questionColumn;
 }
 
 

@@ -1,128 +1,113 @@
-let latestQuestion = null;
+let questions = [];
+let activeQuestionIndex = null;
 let lastUpdated = Date.now();
-
+let timeoutID;
 
 
 async function fetchQuestions() {
   try {
-    const questions = await getQuestions();
-    if (questions.length > 0) {
-      const newLatestQuestion = questions[questions.length - 1][1];
+    const fetchedQuestions = await getQuestionsFromServer();
 
-      if (newLatestQuestion !== latestQuestion) {
-        latestQuestion = newLatestQuestion;
-        lastUpdated = Date.now();
-        currentQuestionIndex = questions.length - 1;  // Set index to the last question
-      };
-    };
-    updateDOM(questions);
+    console.log('Fetched questions:', fetchedQuestions); //Debugging
+    updateQuestions(fetchedQuestions);
   } catch (error) {
     console.error(error);
-  };
-};
+  }
+}
 
 
-
-async function getQuestions() {
+async function getQuestionsFromServer() {
   const response = await fetch('/fetch-approved-questions');
   if (!response.ok) {
     throw new Error(`HTTP get error: ${response.status}`);
   }
   return response.json();
+}
+
+
+function updateQuestions(fetchedQuestions) {
+  if (isNewQuestions(fetchedQuestions)) {
+    questions = fetchedQuestions;
+    setActiveQuestion(true);
+  }
+  renderQuestions();
+  startInactiveTimer();
+}
+
+
+// Return false if the questions are the same
+function isNewQuestions(fetchedQuestions) {
+  return !fetchedQuestions.every((q, i) => q === questions[i]);
+}
+
+
+// DOM Manipulation
+function renderQuestions() {
+  const container = d3.select("#questions-container");
+  const divs = container.selectAll('.question').data(questions);
+
+  divs.enter()
+    .append('div')
+    .attr('class', 'question')
+    .attr('opacity', 0)
+    .text(q => q)
+    .transition() // Fade in
+    .duration(3000) // 3 second
+    .attr('opacity', 0.5);
+
+  divs.exit()
+    .transition()
+    .duration(3000)
+    .attr('opacity', 0)
+    .remove();
+
+  setActiveQuestion();
+}
+
+
+
+// Set recent question, or return a random index from the questions array
+function setActiveQuestion(randomize = false) {
+  const container = d3.select("#questions-container");
+  const divs = container.selectAll('.question').nodes();
+
+  if (divs.length === 0) return;
+
+  // Deactivate old active question
+  container.selectAll('.active-question')
+    .classed('active-question', false)
+    .classed('question', true)
+    .attr('opacity', 0.5);  // Fade to 50%
+
+  // Choose a new active question
+  if (randomize || activeQuestionIndex === null || activeQuestionIndex >= divs.length - 1) {
+    activeQuestionIndex = Math.floor(Math.random() * divs.length);
+  } else {
+    activeQuestionIndex++;
+  }
+
+  // Activate new active question
+  const activeQuestion = d3.select(divs[activeQuestionIndex]);
+  activeQuestion.classed('active-question', true)
+    .classed('question', false)
+    .attr('opacity', 1);  // 100% opaque
+
+  lastUpdated = Date.now();
+  startInactiveTimer();  // Reset 2 minute timeout check
 };
 
 
-
-function updateDOM(questions) {
-  console.log('Before data binding:', questions);
-
-  const container = d3.select("#questions-container");
-  const divs = container.selectAll('.question')
-                        .data(questions, q => q[2]);
-  
-  console.log('After data binding:', divs);
-
-  divs.enter()
-      .append('div')
-      .attr('class', 'question')
-      .text(q => q[1]);
-  divs.exit().remove();
-  updateActiveQuestion(container);
+function startInactiveTimer(duration = 120000) {  // default 2 minutes
+  clearTimeout(timeoutID);  // Clear past timeout event
+  timeoutID = setTimeout(() => {
+    setActiveQuestion(true);  // Randomly choose an active question
+  }, duration);
 }
 
 
 
-function updateActiveQuestion(container) {
-  console.log('Before update:', container.selectAll('.question').nodes());
-
-  const divs = container.selectAll('.question').nodes();
-  if (divs.length === 0) return;
-
-  const now = Date.now();
-  
-  if (now - lastUpdated > 120000) {
-    currentQuestionIndex = Math.floor(Math.random() * divs.length);
-    lastUpdated = now;
-  }
-
-  container.selectAll('.active-question')
-           .classed('active-question', false)
-           .classed('question', true);
-
-  d3.select(divs[currentQuestionIndex])
-    .classed('active-question', true)
-    .classed('question', false);
-
-  console.log('After update:', container.selectAll('.question').nodes());
-}
-
-
-
+// MAIN: Start projections screen, initialize questions
 document.addEventListener("DOMContentLoaded", () => {
   fetchQuestions();
-  setInterval(fetchQuestions, 20000); // Fetch every 20 seconds
-  //setInterval(() => updateActiveQuestion(d3.select("#questions-container")), 120000); // Check every 2 minutes
+  setInterval(fetchQuestions, 45000); // Fetch every 45 seconds
 });
-
-/*
-
-0
-    1 - active
-2
-3
-4
-5
-6
-7
-8
-9
-
-:
-
-0
-1
-1
-    2 - active
-3
-4
-5
-6
-7
-8
-9
-
-:
-
-0
-1
-2
-2
-    3 - active
-4
-5
-6
-7
-8
-9
-
-*/

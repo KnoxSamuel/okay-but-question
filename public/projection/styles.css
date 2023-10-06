@@ -30,11 +30,12 @@ body {
   color: rgba(255, 255, 255, 1); /* Fixed & fully opaque */
   font-size: 120px;
   animation: fadeInOpaque ease-in-out 6s;
-
+  text-align:center;
+  min-width:80vw;
+  margin: 0 auto;
 
   position: fixed;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
 }
 

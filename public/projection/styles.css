@@ -1,7 +1,7 @@
 @font-face {
   /* drop custom fonts in `./public/fonts/` */
   font-family: 'Tiempos';
-  src: url('../fonts/TiemposHeadline/TiemposHeadline-Semibold.otf');
+  src: url('../fonts/TiemposHeadline/TiemposHeadline-Regular.otf');
 }
 
 

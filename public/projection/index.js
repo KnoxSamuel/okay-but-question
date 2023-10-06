@@ -25,6 +25,7 @@ async function getQuestionsFromServer() {
 }
 
 
+
 function updateQuestions(fetchedQuestions) {
   if (isNewQuestions(fetchedQuestions)) {
     questions = fetchedQuestions;
@@ -35,10 +36,12 @@ function updateQuestions(fetchedQuestions) {
 }
 
 
+
 // Return false if the questions are the same
 function isNewQuestions(fetchedQuestions) {
   return !fetchedQuestions.every((q, i) => q === questions[i]);
 }
+
 
 
 // DOM Manipulation
@@ -49,16 +52,16 @@ function renderQuestions() {
   divs.enter()
     .append('div')
     .attr('class', 'question')
-    .attr('opacity', 0)
-    .text(q => q)
+    //.attr('opacity', 0)
+    .text(q => q); /* 
     .transition() // Fade in
-    .duration(3000) // 3 second
-    .attr('opacity', 0.5);
+    .duration(6000) // 3 second
+    .attr('opacity', 0.5); */
 
-  divs.exit()
+  divs.exit()/* 
     .transition()
-    .duration(3000)
-    .attr('opacity', 0)
+    .duration(6000)
+    .attr('opacity', 0) */
     .remove();
 
   setActiveQuestion();
@@ -76,8 +79,10 @@ function setActiveQuestion(randomize = false) {
   // Deactivate old active question
   container.selectAll('.active-question')
     .classed('active-question', false)
-    .classed('question', true)
-    .attr('opacity', 0.5);  // Fade to 50%
+    .classed('question', true);
+    /* .transition() // Fade in
+    .duration(6000) // 6 second
+    .attr('opacity', 0.5);  // Fade to 50% */
 
   // Choose a new active question
   if (randomize || activeQuestionIndex === null || activeQuestionIndex >= divs.length - 1) {
@@ -89,12 +94,15 @@ function setActiveQuestion(randomize = false) {
   // Activate new active question
   const activeQuestion = d3.select(divs[activeQuestionIndex]);
   activeQuestion.classed('active-question', true)
-    .classed('question', false)
-    .attr('opacity', 1);  // 100% opaque
+    .classed('question', false);
+    /* .transition() // Fade in
+    .duration(6000) // 6 second
+    .attr('opacity', 1);  // 100% opaque */
 
   lastUpdated = Date.now();
   startInactiveTimer();  // Reset 2 minute timeout check
 };
+
 
 
 function startInactiveTimer(duration = 120000) {  // default 2 minutes
@@ -109,5 +117,5 @@ function startInactiveTimer(duration = 120000) {  // default 2 minutes
 // MAIN: Start projections screen, initialize questions
 document.addEventListener("DOMContentLoaded", () => {
   fetchQuestions();
-  setInterval(fetchQuestions, 45000); // Fetch every 45 seconds
+  setInterval(fetchQuestions, 20000); // Fetch every 20 seconds
 });

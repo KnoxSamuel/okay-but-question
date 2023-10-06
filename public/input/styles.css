@@ -1,8 +1,18 @@
 @font-face {
-  /* drop custom fonts in `./public/fonts/` */
-  font-family: 'Wellfleet';
-  src: url('../fonts/Wellfleet-Regular.ttf') format('truetype');
+  font-family: 'Tatsuro';
+  src: url('../fonts/VTCTatsuro/VTCTatsuro-Regular.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('../fonts/TiemposHeadline/TiemposHeadline-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Pitch';
+  src: url('../fonts/PitchSans/PitchSans-Semibold.otf');
+}
+
 
 body {
   background-color: black;
@@ -15,13 +25,15 @@ body {
 }
 
 #heading {
-  font-size: 80px;
+  font-family: Tatsuro, sans-serif;
+  font-size: 166px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 #subheading {
-  font-size: 36px;
+  font-family: Tiempos, sans-serif;
+  font-size: 60px;
 }
 
 #input-form {
@@ -30,9 +42,9 @@ body {
 }
 
 input[type="text"] {
-  font-family: 'Wellfleet', sans-serif;
+  font-family: 'Pitch', sans-serif;
   text-align: center;
-  font-size: 32px;
+  font-size: 36px;
   margin: 0 auto;
   padding: 18px 30px;
   border: 3px solid #ccc;
@@ -41,7 +53,7 @@ input[type="text"] {
 }
 
 button {
-  font-family: 'Wellfleet', sans-serif;
+  font-family: 'Pitch', sans-serif;
   display: block;
   cursor: pointer;
   font-size: 30px;

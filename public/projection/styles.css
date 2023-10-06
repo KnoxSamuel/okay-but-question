@@ -1,19 +1,25 @@
 @font-face {
   /* drop custom fonts in `./public/fonts/` */
-  font-family: 'Wellfleet';
-  src: url('../fonts/Wellfleet-Regular.ttf') format('truetype');
+  font-family: 'Tiempos';
+  src: url('../fonts/TiemposHeadline/TiemposHeadline-Semibold.otf');
 }
 
 
 body {
   background-color: black;
-  font-family: 'Wellfleet', sans-serif;
+  font-family: 'Tiempos', sans-serif;
 }
 
 
+#questions-container {
+  max-height: 98vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 
 .question {
-  font-size: 70px;
+  font-size: 60px;
   animation: fadeInHalf ease-in-out 6s forwards;
   color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
 }
@@ -21,7 +27,7 @@ body {
 
 .active-question {
   color: rgba(255, 255, 255, 1); /* Fixed & fully opaque */
-  font-size: 90px;
+  font-size: 120px;
   animation: fadeInOpaque ease-in-out 6s;
 
 
@@ -51,6 +57,7 @@ body {
     opacity: 1;
   }
 }
+
 
 /* TODO: Refine this drifting animation to bounce over entire screen */
 /* @keyframes drift {

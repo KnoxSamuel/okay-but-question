@@ -19,7 +19,7 @@ body {
 
 
 .question {
-  font-size: 60px;
+  font-size: 44px;
   font-weight: lighter;
   animation: fadeInHalf ease-in-out 6s forwards;
   color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
@@ -28,7 +28,7 @@ body {
 
 .active-question {
   color: rgba(255, 255, 255, 1); /* Fixed & fully opaque */
-  font-size: 120px;
+  font-size: 112px;
   animation: fadeInOpaque ease-in-out 6s;
   text-align:center;
   min-width:80vw;

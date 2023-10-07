@@ -9,7 +9,7 @@ async function fetchQuestions() {
     const fetchedQuestions = await getQuestionsFromServer();
 
     console.log('Fetched questions:', fetchedQuestions); //Debugging
-    updateQuestions(fetchedQuestions);
+    renderQuestions(fetchedQuestions);
   } catch (error) {
     console.error(error);
   }
@@ -25,7 +25,7 @@ async function getQuestionsFromServer() {
 }
 
 
-
+/* 
 function updateQuestions(fetchedQuestions) {
   if (isNewQuestions(fetchedQuestions)) {
     questions = fetchedQuestions;
@@ -35,19 +35,17 @@ function updateQuestions(fetchedQuestions) {
   startInactiveTimer();
 }
 
-
-
 // Return false if the questions are the same
 function isNewQuestions(fetchedQuestions) {
   return !fetchedQuestions.every((q, i) => q === questions[i]);
 }
-
+ */
 
 
 // DOM Manipulation
-function renderQuestions() {
+function renderQuestions(fetchedQuestions) {
   const container = d3.select("#questions-container");
-  const divs = container.selectAll('.question').data(questions);
+  const divs = container.selectAll('.question').data(fetchedQuestions);
 
   divs.enter()
     .append('div')
@@ -61,11 +59,10 @@ function renderQuestions() {
 
 
 
-// Set recent question, or return a random index from the questions array
-function setActiveQuestion(randomize = false, newQuestion = false) {
+// Set a random index from the questions to active
+function setActiveQuestion() {
   const container = d3.select("#questions-container");
   const divs = container.selectAll('.question').nodes();
-
   if (divs.length === 0) return;
 
   // Deactivate old active question
@@ -74,13 +71,9 @@ function setActiveQuestion(randomize = false, newQuestion = false) {
     .classed('question', true);
 
   // Choose a new active question
-  if (randomize) {
-    activeQuestionIndex = Math.floor(Math.random() * divs.length);
-    lastUpdated = Date.now();
-    startInactiveTimer();  // Reset 2 minute timeout check
-  } else {
-    activeQuestionIndex++;
-  }
+  activeQuestionIndex = Math.floor(Math.random() * divs.length);
+  /* lastUpdated = Date.now();
+  startInactiveTimer();  // Reset 2 minute timeout check */
 
   // Activate new active question
   const activeQuestion = d3.select(divs[activeQuestionIndex]);
@@ -90,7 +83,7 @@ function setActiveQuestion(randomize = false, newQuestion = false) {
 };
 
 
-
+/* 
 function startInactiveTimer(duration = 120000) {  // default 2 minutes
   clearTimeout(timeoutID);  // Clear past timeout event
   timeoutID = setTimeout(() => {
@@ -99,7 +92,7 @@ function startInactiveTimer(duration = 120000) {  // default 2 minutes
     }
   }, duration);
 }
-
+ */
 
 
 // MAIN: Start projections screen, initialize questions

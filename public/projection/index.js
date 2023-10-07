@@ -54,13 +54,13 @@ function renderQuestions(fetchedQuestions) {
 
   divs.exit().remove();
 
-  setActiveQuestion(true);
+  setActiveQuestion();
 }
 
 
 
-// Set recent question, or return a random index from the questions array
-function setActiveQuestion(randomize = false) {
+// Set a random index from the questions to active
+function setActiveQuestion() {
   const container = d3.select("#questions-container");
   const divs = container.selectAll('.question').nodes();
   if (divs.length === 0) return;
